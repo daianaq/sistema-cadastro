@@ -77,15 +77,16 @@ def formatar_telefone(event=None):
 
     entrada_telefone.delete(0, "end")
     entrada_telefone.insert(0, telefone_formatado)
+
 def enviar_cadastro():
 
-    nome = entrada_nome.get()
-    email = entrada_email.get()
-    telefone = entrada_telefone.get()
-    cidade = entrada_cidade.get()
-    estado = combo_estado.get()
-    cargo = entrada_cargo.get()
-    empresa = entrada_empresa.get()
+    nome = entrada_nome.get().strip()
+    email = entrada_email.get().strip()
+    telefone = entrada_telefone.get().strip()
+    cidade = entrada_cidade.get().strip()
+    estado = combo_estado.get().strip()
+    cargo = entrada_cargo.get().strip()
+    empresa = entrada_empresa.get().strip()
 
     if not nome:
         messagebox.showwarning(
@@ -155,6 +156,15 @@ def enviar_cadastro():
         "Cadastro",
         "Cadastro realizado com sucesso!"
     )
+    entrada_nome.delete(0, "end")
+    entrada_email.delete(0, "end")
+    entrada_telefone.delete(0, "end")
+    entrada_cidade.delete(0, "end")
+    combo_estado.set("BA")
+    entrada_cargo.delete(0, "end")
+    entrada_empresa.delete(0, "end")
+
+    entrada_nome.focus
 
 # ==========================================
 # Frame Login
