@@ -5,6 +5,7 @@ from tkinter import messagebox
 # Configurações
 # ==========================================
 
+
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
@@ -45,8 +46,110 @@ def verificar_login():
             "Usuário ou senha incorretos."
         )
 
+def validar_email(email):
+    return "@"  in email and ".com" in email
 
+def formatar_telefone(event=None):
+
+    telefone = entrada_telefone.get()
+
+    numeros = "".join(filter(str.isdigit, telefone))
+
+    if len(numeros) > 11:
+        messagebox.showwarning(
+            "Atenção",
+            "O telefone deve ter no máximo 11 números."
+        )
+
+        numeros = numeros[:11]
+
+    if len(numeros) <= 2:
+        telefone_formatado = f"({numeros}"
+
+    elif len(numeros) <= 7:
+        telefone_formatado = f"({numeros[:2]}) {numeros[2:]}"
+
+    else:
+        telefone_formatado = (
+            f"({numeros[:2]}) "
+            f"{numeros[2:7]}-{numeros[7:]}"
+        )
+
+    entrada_telefone.delete(0, "end")
+    entrada_telefone.insert(0, telefone_formatado)
 def enviar_cadastro():
+
+    nome = entrada_nome.get()
+    email = entrada_email.get()
+    telefone = entrada_telefone.get()
+    cidade = entrada_cidade.get()
+    estado = combo_estado.get()
+    cargo = entrada_cargo.get()
+    empresa = entrada_empresa.get()
+
+    if not nome:
+        messagebox.showwarning(
+            "Atenção",
+            "Preencha o campo Nome Completo."
+        )
+        entrada_nome.focus()
+        return
+
+    if not email:
+        messagebox.showwarning(
+            "Atenção",
+            "Preencha o campo E-mail."
+        )
+        entrada_email.focus()
+        return
+    if not validar_email(email):
+        messagebox.showwarning(
+            "Atenção",
+            "E-mail inválido. Preencha corretamente."
+        )
+        entrada_email.focus()
+        return
+    
+
+    if not telefone:
+        messagebox.showwarning(
+            "Atenção",
+            "Preencha o campo Telefone."
+        )
+        entrada_telefone.focus()
+        return
+    numeros_telefone = "".join(filter(str.isdigit, telefone))
+    if len(numeros_telefone) != 11:
+        messagebox.showwarning(
+            "Atenção",
+            "Informe um telefone válido com 11 números"
+        )
+        entrada_telefone.focus()
+        return
+
+    if not cidade:
+        messagebox.showwarning(
+            "Atenção",
+            "Preencha o campo Cidade."
+        )
+        entrada_cidade.focus()
+        return
+
+    if not estado:
+        messagebox.showwarning(
+            "Atenção",
+            "Selecione um Estado."
+        )
+        combo_estado.focus()
+        return
+
+    if not cargo:
+        messagebox.showwarning(
+            "Atenção",
+            "Preencha o campo Cargo."
+        )
+        entrada_cargo.focus()
+        return
 
     messagebox.showinfo(
         "Cadastro",
