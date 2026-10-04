@@ -1,10 +1,10 @@
 import customtkinter as ctk
 from tkinter import messagebox
+from screens.login import criar_tela_login
 
 # ==========================================
 # Configurações
 # ==========================================
-
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -26,25 +26,6 @@ app.iconbitmap("assets/icon_form.ico")
 # ==========================================
 # Funções
 # ==========================================
-
-def verificar_login():
-
-    usuario = entrada_usuario.get()
-    senha = entrada_senha.get()
-
-    if usuario == "admin" and senha == "4321":
-
-        frame_login.pack_forget()
-        frame_cadastro.pack(fill="both", expand=True)
-
-        entrada_nome.focus()
-
-    else:
-
-        messagebox.showerror(
-            "Erro",
-            "Usuário ou senha incorretos."
-        )
 
 def validar_email(email):
     return "@"  in email and ".com" in email
@@ -164,76 +145,15 @@ def enviar_cadastro():
     entrada_cargo.delete(0, "end")
     entrada_empresa.delete(0, "end")
 
-    entrada_nome.focus
-
-# ==========================================
-# Frame Login
-# ==========================================
-
-frame_login = ctk.CTkFrame(app)
-
-frame_login.pack(
-    fill="both",
-    expand=True,
-    padx=30,
-    pady=30
-)
-
-titulo_login = ctk.CTkLabel(
-    frame_login,
-    text="Sistema de Cadastro",
-    font=("Arial", 30, "bold")
-)
-titulo_login.pack(pady=(30, 40))
-
-label_usuario = ctk.CTkLabel(
-    frame_login,
-    text="Usuário",
-    font=("Arial", 18, "bold")
-)
-label_usuario.pack()
-
-entrada_usuario = ctk.CTkEntry(
-    frame_login,
-    width=300,
-    height=40,
-    placeholder_text="Usuário"
-)
-entrada_usuario.pack(pady=10)
-
-label_senha = ctk.CTkLabel(
-    frame_login,
-    text="Senha",
-    font=("Arial", 18, "bold")
-)
-label_senha.pack(pady=(20, 0))
-
-entrada_senha = ctk.CTkEntry(
-    frame_login,
-    width=300,
-    height=40,
-    show="*",
-    placeholder_text="Senha"
-)
-entrada_senha.pack(pady=10)
-
-botao_login = ctk.CTkButton(
-    frame_login,
-    text="Acessar",
-    width=120,
-    height=45,
-    font=("Arial", 16, "bold"),
-    command=verificar_login
-)
-botao_login.pack(pady=40)
-
-# Enter faz login
-
-app.bind("<Return>", lambda event: verificar_login())
+    entrada_nome.focus()
 
 # ==========================================
 # Frame Cadastro
 # ==========================================
+
+def abrir_cadastro():
+    frame_cadastro.pack(fill="both", expand=True)
+    entrada_nome.focus()
 
 frame_cadastro = ctk.CTkFrame(app)
 
@@ -409,6 +329,6 @@ rodape.pack(pady=(0, 15))
 # Inicialização
 # ==========================================
 
-entrada_usuario.focus()
+criar_tela_login(app, abrir_cadastro)
 
 app.mainloop()
